@@ -23,7 +23,7 @@ class Scribble:
 
     def __mul__(self, other):
         self.board.log(f"{self.math_board_id}~{other.math_board_id}|*|op")
-        block = self.blocks * other.block
+        block = self.block * other.block
 
         return Scribble(block=block, board=self.board)
 
