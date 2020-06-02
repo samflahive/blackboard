@@ -9,8 +9,8 @@ class Scribble:
 
         self.math_board_id = self.board.track()
 
-    def latex(self):
-        return self.block.latex()
+    def latex(self, explicit=False, show_plus=False):
+        return self.block.latex(explicit=explicit, show_plus=show_plus)
 
     def evaluate(self):
         return self.block.evaluate()
