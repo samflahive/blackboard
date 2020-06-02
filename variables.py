@@ -1,4 +1,3 @@
-from math_board import math_board
 from scribble import Scribble
 from numbers import number, random_number
 import math_blocks
@@ -8,7 +7,7 @@ class variable(Scribble):
         if isinstance(value, random_number):
             value = number(value, board=board)
         if value != None and not isinstance(value, Scribble):
-            raise ValueError("math_board numbers need a random_number object as its value")
+            raise ValueError("math_board numbers need a random_number or scribble object as its value")
         if board == None and value != None:
             board = value.board
 
@@ -17,7 +16,7 @@ class variable(Scribble):
         else:
             board_message = None
 
-        block = math_blocks.variable(symbol=symbol, value=value, sign=sign)
+        block = math_blocks.variable(symbol=symbol, value=value.block, sign=sign)
 
         Scribble.__init__(self, block=block, board=board, message=board_message)
 
