@@ -9,7 +9,7 @@ class random_number:
         self.board = board
 
         if log:
-            board.log(f"{upper}~{lower}|rn|_i_")
+            board.log(f"{lower}~{upper}|rn|_i_")
         
         self.upper = upper
         self.lower = lower
