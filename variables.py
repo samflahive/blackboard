@@ -15,8 +15,9 @@ class variable(Scribble):
             board_message = f"{symbol}~{value.math_board_id if value != None else ' '}~{'T' if sign else 'F'}|v|_i_"
         else:
             board_message = None
-
-        block = math_blocks.variable(symbol=symbol, value=value.block, sign=sign)
+        if value != None:
+            value = value.block
+        block = math_blocks.variable(symbol=symbol, value=value, sign=sign)
 
         Scribble.__init__(self, block=block, board=board, message=board_message)
 
