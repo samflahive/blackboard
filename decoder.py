@@ -1,5 +1,6 @@
 import math_blocks
 from random import randint
+from block_methods import *
 
 class random_number:
     def __init__(self, lower, upper):
@@ -27,7 +28,16 @@ def decode_math_board(line):
             math_block_operation(action, args, command_outputs)
         # not implemented
         else:
-            raise NotImplementedError("class/object method have not been implemented yet")
+            if action == "f":
+                fraction_method(args, description, command_outputs)
+            elif action == "c":
+                chain_method(args, description, command_outputs)
+            elif action == "cx":
+                complex_method(args, description, command_outputs)
+            elif action == "e":
+                exponential_method(args, description, command_outputs)
+            else:
+                raise NotImplementedError(f"{action} does not have any methods besides __init__")
     return command_outputs
 
 
@@ -42,7 +52,7 @@ def extract_single_arg(arg, blocks):
 
     return block
 
-def convert_to_block_double(args):
+def convert_to_block_double(action, args, blocks):
     a = extract_single_arg(int(args[0]), blocks)
     b = extract_single_arg(int(args[1]), blocks)
     
@@ -113,7 +123,7 @@ def create_math_block(action, args, blocks):
             
         # just two args and a sign
         else:
-            block = convert_to_block_double(args)
+            block = convert_to_block_double(action, args, blocks)
             
 
     blocks.append(block)
@@ -137,6 +147,6 @@ def math_block_operation(action, args, blocks):
 example_line = '-100~100|rn|_i_,0~T|n|_i_,0~T|n|_i_,1~2|+|op,3~2|/|op'
 example_line_2 = '-100~100|rn|_i_,0~T|n|_i_,0~T|n|_i_,0~T|n|_i_,0~T|n|_i_,1 2 3 4~T|c|_i_'
 example_line_3 = 'x~ ~T|v|_i_,0~5|rn|_i_,1~T|n|_i_,1~T|n|_i_,1~T|n|_i_,1~T|n|_i_,2 3 4 5~0~T|sp|_i_'
-
-out = decode_math_board(example_line_3)
+example_line_4 = '-100~100|rn|_i_,0~T|n|_i_,0~T|n|_i_,1~2~T|f|_i_,0~T|n|_i_,0~T|n|_i_,0~T|n|_i_,4 5 3 6~T|c|_i_,0~T|n|_i_,7~8~T|f|_i_,9|f|sp'
+out = decode_math_board(example_line_4)
 print(out[-1].latex())

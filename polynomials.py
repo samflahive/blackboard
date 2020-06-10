@@ -21,4 +21,4 @@ class polynomial(Scribble):
 
         block = math_blocks.polynomial(items=blocks, sign=sign)
 
-        Scribble.__init__(self, block=block, board=board, message=board_message)
+        Scribble(self, block=block, board=board, message=board_message)

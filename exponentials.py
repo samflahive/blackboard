@@ -25,4 +25,16 @@ class exponential(Scribble):
 
         Scribble.__init__(self, block=block, board=board, message=board_message)
 
+    def rebase(self, base):
+        if isinstance(base, random_number):
+            base = number(base, board=board)
+        elif not isinstance(base, Scribble):
+            raise ValueError("exponential.rebase takes a random_number or Scribble as its argument")
+        
+        board_message = f"{self.math_board_id}~{base.math_board_id}|e|rb"
+        block = self.block.rebase(base.block)
+        
+        return Scribble(self, block=block, board=self.board, message=board_message)
+
+
 

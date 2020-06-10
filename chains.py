@@ -28,5 +28,11 @@ class chain(Scribble):
         Scribble.__init__(self, block=block, board=board, message=board_message)
 
 
+    def ripple_sign(self):
+        board_message = f"{self.math_board_id}|c|rs"
+        block = self.block.ripple_sign()
+        
+        return Scribble(self, block=block, board=self.board, message=board_message)
+
 
 

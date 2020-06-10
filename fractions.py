@@ -26,3 +26,16 @@ class fraction(Scribble):
         Scribble.__init__(self, block=block, board=board, message=board_message)
 
 
+    def split(self):
+        board_message = f"{self.math_board_id}|f|sp"
+        block = self.block.split()
+        
+        return Scribble(self, block=block, board=self.board, message=board_message)
+
+    def inverse(self):
+        board_message = f"{self.math_board_id}|f|iv"
+        block = self.block.inverse()
+        
+        return Scribble(self, block=block, board=self.board, message=board_message)
+
+
