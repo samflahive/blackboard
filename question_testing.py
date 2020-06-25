@@ -10,19 +10,19 @@ class Question:
 
     def setup(self):
         self.question_targets = self.board.question_targets
-        if len(self.board.answer) == 1:
+        if len(self.board.answer_targets) == 1:
             self.answer_type = "expression"
-            self.answer_index = self.board.answer_targets[0]
+            self.answer_targets = self.board.answer_targets[0]
             
-        elif len(self.board.answer) > 1:
+        elif len(self.board.answer_targets) > 1:
             self.answer_type = "numberlist"
-            self.answer_index = self.board.answer_targets
+            self.answer_targets = self.board.answer_targets
         else:
             raise ValueError("cannot have zero answer elements")
 
     def compress(self):
         string = ",".join(self.board.record)
-        self.instructions = string
+        self.instruction = string
 
     
     def extract(self):
@@ -30,7 +30,7 @@ class Question:
         question_data = [blocks[index].latex() for index in self.question_targets]
 
         if self.answer_type == "expression":
-            answer_data = blocks[self.answer_target].latex()
+            answer_data = blocks[self.answer_targets].latex()
 
         elif self.answer_type == "numberlist":
             answer_data = [blocks[index].evaluate() for index in self.answer_targets]

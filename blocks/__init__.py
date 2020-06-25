@@ -11,3 +11,4 @@ from .products import Product
 from .scribble import Scribble
 from .simple_poly import SimplePoly
 from .variables import Variable
+from .math_board import MathBoard
