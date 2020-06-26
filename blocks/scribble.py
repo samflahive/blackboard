@@ -28,7 +28,7 @@ class Scribble:
         return Scribble(block=block, board=self.board)
 
     def __truediv__(self, other):
-        self.board.log(f"{self.math_board_id}~{other.math_board_id}|/|op")
+        self.board.log(f"{self.math_board_id}~{other.math_board_id}|d|op")
         block = self.block / other.block
 
         return Scribble(block=block, board=self.board)
