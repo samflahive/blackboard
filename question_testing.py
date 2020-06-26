@@ -23,22 +23,42 @@ class Question:
     def compress(self):
         string = ",".join(self.board.record)
         self.instruction = string
+        question_data_instructions = " ".join(str(q) for q in self.question_targets)
+        if self.answer_type == "expression":
+            decode_instructions = f"ex,{question_data_instructions},{self.answer_targets}"
+        else:
+            answer_targets_instructions = " ".join(str(q) for q in self.answer_targets)
+            decode_instructions = f"nl,{question_data_instructions},{answer_targets_instructions}"
+
+        self.decode_instructions = decode_instructions
 
     
     def extract(self):
-        blocks = decode_math_board(self.instruction)
-        question_data = [blocks[index].latex() for index in self.question_targets]
+        return get_question_info(self.instruction, self.decode_instructions)
 
-        if self.answer_type == "expression":
-            answer_data = blocks[self.answer_targets].latex()
 
-        elif self.answer_type == "numberlist":
-            answer_data = [blocks[index].evaluate() for index in self.answer_targets]
+def get_question_info(instructions, extraction):
+    blocks = decode_math_board(instructions)
+    extraction = extraction.split(",")
 
-        else:
-            raise ValueError(f"Invalid answer type: {self.answer_type}")
+    question_targets = extraction[1].split(" ")
+    question_targets = [int(i) for i in question_targets]
+    question_data = [blocks[index].latex() for index in question_targets]
 
-        self.blocks = blocks
+    if extraction[0] == "ex":
+        answer_target = int(extraction[2])
+        answer_data = blocks[answer_target].latex()
+        answer_type = "expression"
 
-        return {"question_data": question_data,
-                "answer_data": answer_data}
+    elif extraction[0] == "nl":
+        answer_target  = extraction[2].split(" ")
+        answer_target = [int(i) for i in answer_target]
+
+        answer_data = [blocks[index].evaluate() for index in answer_targets]
+        answer_type = "numberlist"
+
+    else:
+        raise ValueError("answers must be expressions or numberlists")
+
+    return {"question_data":question_data, "answer_data":answer_data, "answer_type":answer_type}
+
